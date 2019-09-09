@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <stdlib.h> // TODO: Optimize out this include?
 #include <math.h>
+#include <string.h>
 
 enum OutputType
 {
@@ -27,8 +28,6 @@ struct NumReprs
 
 struct NumReprs parseNumeric(int32_t inRawNum, int32_t inRadix, uint32_t inOpSize)
 {
-    // TODO: Right now just assumes that the raw num will not need ot be converted.
-    // May need to add "octalToDec" and "hexToDec" converters.
     struct NumReprs outNum = {0};
     outNum.dec = inRawNum;
     outNum.dec_abs = (uint32_t)abs(inRawNum);
@@ -96,7 +95,7 @@ void print_bin(uint32_t inNum, size_t inOpSize)
 }
 
 
-static const char* labelOutput =         "Output:                    ";
+static const char* labelOutput =         "\nOutput:                    ";
 static const char* labelBinary =         "\nBinary (abs)               ";
 static const char* labelOctal =          "\nOctal (abs)                ";
 static const char* labelDecimal =        "\nDecimal (abs)              ";
@@ -107,10 +106,8 @@ static const char* labelSignMagnitude =  "\nSign-Magnitude             ";
 
 void print_numerical_representation(struct NumReprs inNum, int32_t inRadix, int32_t inOpSize, enum OutputType inType)
 {
-    // error conditions:
-    // opSize != 4, 8, or 16
-    // radix != 8, 10, or 16
-    // inNum > (2 ^ radix) - 1
+    const uint16_t NIBBLE_SIZE = 4;
+    const int16_t numNibbles = inOpSize/NIBBLE_SIZE;
     const double operandStorage = pow(2, inOpSize) - 1;
     const double operandStorageSignedMag = pow(2, inOpSize-1) - 1;
 
@@ -123,88 +120,272 @@ void print_numerical_representation(struct NumReprs inNum, int32_t inRadix, int3
             {
                 if(inNum.dec_abs <= operandStorage)
                 {
-                    printf("0b"); print_bin(inNum.dec_abs, inOpSize);
+                    printf("0b");
+                    print_bin(inNum.dec_abs, inOpSize);
+                    printf("   ");
+                    return;
                 }
-                else
-                {
-                    printf("Error");
-                }
-                
-                return;
+                break;
             }
             case Octal:
             {
                 printf("%#o", abs(inNum.dec));
+                
+                int32_t num = inNum.dec;
+                int32_t numDig = 0;
+                while(num)
+                {
+                    num /= 10;
+                    numDig++;
+                }
+                printf("%*s", (inOpSize + (int)strlen("0x") - numDig + 2), "");
                 return;
             }
             case Decimal:
             {
                 printf("%d", abs(inNum.dec));
+                int32_t num = inNum.dec;
+                int32_t numDig = 0;
+                while(num)
+                {
+                    num /= 10;
+                    numDig++;
+                }
+                printf("%*s", (inOpSize + (int)strlen("0x") - numDig + 3), "");
                 return;
             }
             case Hexadecimal:
             {
-                printf("0x%X", abs(inNum.dec));
-                return;
+                if(inNum.dec_abs <= operandStorage)
+                {
+                    printf("0x%X", abs(inNum.dec));
+                    printf("%*s", (inOpSize + (int)strlen("0x") - numNibbles + 1), "");
+                    return;
+                }
+                break;
             }
             case SignedOnesComplement:
             {
                 if(inNum.dec_abs  <= operandStorage)
                 {
                     printf("0b"); print_bin(inNum.ones_comp, inOpSize);
+                    printf("   ");
+                    return;
                 }
-                else
-                {
-                    printf("Error");
-                }
-                return;
+                break;
             }
             case SignedTwosComplement:
             {
                 if(inNum.dec_abs <= operandStorage)
                 {
                     printf("0b"); print_bin(inNum.twos_comp, inOpSize);
+                    printf("   ");
+                    return;
                 }
-                else
-                {
-                    printf("Error");
-                }
-                return;
+                break;
             }
             case SignMagnitude:
             {
                 if(inNum.dec_abs <= operandStorageSignedMag)
                 {
                     printf("0b"); print_bin(inNum.sign_mag, inOpSize);
+                    printf("   ");
+                    return;
                 }
-                else
+                break;
+            }
+            default:
+                break; // Will go to error condition printing below
+        }
+    }
+    printf("Error%*s", inOpSize, "");
+    return;
+}
+
+void print_maximum_representation(int32_t inRadix, int32_t inOpSize, enum OutputType inType)
+{
+    const uint16_t NIBBLE_SIZE = 4;
+    const int16_t numNibbles = inOpSize/NIBBLE_SIZE;
+    const uint32_t operandStorage = (uint32_t)pow(2, inOpSize) - 1;
+    const double operandStorageSignedMag = pow(2, inOpSize-1) - 1;
+    
+    if((4 == inOpSize || 8 == inOpSize || 16 == inOpSize) &&
+       (8 == inRadix || 10 == inRadix || 16 == inRadix))
+    {
+        switch(inType)
+        {
+            case Binary:
+            {
+                printf("0b");
+                print_bin((uint32_t)operandStorage, inOpSize);
+                printf("   ");
+                return;
+            }
+            case Octal:
+            {
+                printf("%#o", operandStorage);
+
+                int32_t num = operandStorage;
+                int32_t numDig = 0;
+                while(num)
                 {
-                    printf("Error");
+                    num /= 10;
+                    numDig++;
                 }
-                
+                printf("%*s", (inOpSize + (int)strlen("0x") - numDig + 2), "");
+                return;
+            }
+            case Decimal:
+            {
+                printf("%d", operandStorage);
+                int32_t num = operandStorage;
+                int32_t numDig = 0;
+                while(num)
+                {
+                    num /= 10;
+                    numDig++;
+                }
+                printf("%*s", (inOpSize + (int)strlen("0x") - numDig + 3), "");
+                return;
+            }
+            case Hexadecimal:
+            {
+                printf("0x%X", operandStorage);
+                printf("%*s", (inOpSize + (int)strlen("0x") - numNibbles + 1), "");
+                return;
+            }
+            case SignedOnesComplement:
+            {
+                printf("0b");
+                print_bin((uint32_t)operandStorageSignedMag, inOpSize);
+                printf("   ");
+                return;
+            }
+            case SignedTwosComplement:
+            {
+                printf("0b");
+                print_bin((uint32_t)operandStorageSignedMag+1, inOpSize);
+                printf("   ");
+                return;
+            }
+            case SignMagnitude:
+            {
+                printf("0b");
+                print_bin((uint32_t)operandStorageSignedMag, inOpSize);
+                printf("   ");
                 return;
             }
             default:
-                printf("FATAL ERROR.");
+                break; // Will go to error condition printing below
         }
     }
-    
-    printf("Error");
+    printf("Error%*s", inOpSize, "");
     return;
+}
 
+void print_minimum_representation(int32_t inRadix, int32_t inOpSize, enum OutputType inType)
+{
+    const uint16_t NIBBLE_SIZE = 4;
+    const int16_t numNibbles = inOpSize/NIBBLE_SIZE;
+    const uint32_t operandStorage = (uint32_t)pow(2, inOpSize) - 1;
+    const double operandStorageSignedMag = pow(2, inOpSize-1);
+    
+    if((4 == inOpSize || 8 == inOpSize || 16 == inOpSize) &&
+       (8 == inRadix || 10 == inRadix || 16 == inRadix))
+    {
+        switch(inType)
+        {
+            case Binary:
+            {
+                printf("0b");
+                print_bin(0, inOpSize);
+                return;
+            }
+            case Octal:
+            {
+                printf("0");
+                return;
+            }
+            case Decimal:
+            {
+                printf("0");
+                return;
+            }
+            case Hexadecimal:
+            {
+                printf("0x%0*d", numNibbles, 0);
+                return;
+            }
+            case SignedOnesComplement:
+            {
+                printf("0b");
+                print_bin((uint32_t)operandStorageSignedMag, inOpSize);
+                printf("   ");
+                return;
+            }
+            case SignedTwosComplement:
+            {
+                printf("0b");
+                print_bin((uint32_t)operandStorageSignedMag+1, inOpSize);
+                printf("   ");
+                return;
+                break;
+            }
+            case SignMagnitude:
+            {
+                printf("0b");
+                print_bin((uint32_t)operandStorage, inOpSize);
+                printf("   ");
+                return;
+            }
+            default:
+                break; // Will go to error condition printing below
+        }
+    }
+    printf("Error%*s", inOpSize, "");
+    return;
 }
 
 void print_numerical_representations(int32_t inRawNum, int32_t inRadix, int32_t inOpSize)
 {
     struct NumReprs nr = parseNumeric(inRawNum, inRadix, inOpSize);
-    printf("%s Raw num: %d  Radix: %d  OpSize: %d", labelOutput, inRawNum, inRadix, inOpSize);
-    printf("%s", labelBinary);         print_numerical_representation(nr, inRadix, inOpSize, Binary);
-    printf("%s", labelOctal);          print_numerical_representation(nr, inRadix, inOpSize, Octal);
-    printf("%s", labelDecimal);        print_numerical_representation(nr, inRadix, inOpSize, Decimal);
-    printf("%s", labelHexadecimal);    print_numerical_representation(nr, inRadix, inOpSize, Hexadecimal);
-    printf("%s", labelOnesComplement); print_numerical_representation(nr, inRadix, inOpSize, SignedOnesComplement);
-    printf("%s", labelTwosComplement); print_numerical_representation(nr, inRadix, inOpSize, SignedTwosComplement);
-    printf("%s", labelSignMagnitude);  print_numerical_representation(nr, inRadix, inOpSize, SignMagnitude);
+    printf("Raw num: %d  Radix: %d  OpSize: %d\n", inRawNum, inRadix, inOpSize);
+    printf("%s%s%*s%*s", labelOutput, "Value", inOpSize+2+5, "Maximum", inOpSize+2+3, "Minimum");
+    
+    printf("%s", labelBinary);
+    print_numerical_representation(nr, inRadix, inOpSize, Binary);
+    print_maximum_representation(inRadix, inOpSize, Binary);
+    print_minimum_representation(inRadix, inOpSize, Binary);
+    
+    printf("%s", labelOctal);
+    print_numerical_representation(nr, inRadix, inOpSize, Octal);
+    print_maximum_representation(inRadix, inOpSize, Octal);
+    print_minimum_representation(inRadix, inOpSize, Octal);
+    
+    printf("%s", labelDecimal);
+    print_numerical_representation(nr, inRadix, inOpSize, Decimal);
+    print_maximum_representation(inRadix, inOpSize, Decimal);
+    print_minimum_representation(inRadix, inOpSize, Decimal);
+    
+    printf("%s", labelHexadecimal);
+    print_numerical_representation(nr, inRadix, inOpSize, Hexadecimal);
+    print_maximum_representation(inRadix, inOpSize, Hexadecimal);
+    print_minimum_representation(inRadix, inOpSize, Hexadecimal);
+    
+    printf("%s", labelOnesComplement);
+    print_numerical_representation(nr, inRadix, inOpSize, SignedOnesComplement);
+    print_maximum_representation(inRadix, inOpSize, SignedOnesComplement);
+    print_minimum_representation(inRadix, inOpSize, SignedOnesComplement);
+    
+    printf("%s", labelTwosComplement);
+    print_numerical_representation(nr, inRadix, inOpSize, SignedTwosComplement);
+    print_maximum_representation(inRadix, inOpSize,  SignedTwosComplement);
+    print_minimum_representation(inRadix, inOpSize, SignedTwosComplement);
+    
+    printf("%s", labelSignMagnitude);
+    print_numerical_representation(nr, inRadix, inOpSize, SignMagnitude);
+    print_maximum_representation(inRadix, inOpSize, SignMagnitude);
+    print_minimum_representation(inRadix, inOpSize, SignMagnitude);
     printf("\n\n");
 }
 
