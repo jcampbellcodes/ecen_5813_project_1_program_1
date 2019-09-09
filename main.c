@@ -1,4 +1,13 @@
-//
+// TODO:
+// Vet includes to make sure we need them actually
+// refactor repeated code -- command pattern?
+// bring out constants from magic numbers
+// use platform independent integer widths
+// break functions into their own files
+// break types into a helper file
+// add command line input?
+
+
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
@@ -40,22 +49,21 @@ struct NumReprs parseNumeric(int32_t inRawNum, int32_t inRadix, uint32_t inOpSiz
     return outNum;
 };
 
-const char* getOutputString(struct NumReprs inNum, enum OutputType inType, int32_t inOpSize);
-
-const char* toBinary(uint32_t inNum, uint32_t inNumBits);
-
-bool canRepresentNum(struct NumReprs inNum, enum OutputType inType, int32_t inOpSize);
-
-// https://stackoverflow.com/questions/111928/is-there-a-printf-converter-to-print-in-binary-format
-const char *bit_rep[16] = {
-    [ 0] = "0000", [ 1] = "0001", [ 2] = "0010", [ 3] = "0011",
-    [ 4] = "0100", [ 5] = "0101", [ 6] = "0110", [ 7] = "0111",
-    [ 8] = "1000", [ 9] = "1001", [10] = "1010", [11] = "1011",
-    [12] = "1100", [13] = "1101", [14] = "1110", [15] = "1111",
-};
 void printNibble(uint8_t inNum)
 {
-    printf("%s", bit_rep[inNum & 0x0F]);
+    const uint16_t NIBBLE_SIZE = 4;
+    uint8_t maskedNibble = inNum & 0x0F;
+    for(int bit = 0; bit < NIBBLE_SIZE; bit++)
+    {
+        if(maskedNibble & (1 << bit))
+        {
+            printf("1");
+        }
+        else
+        {
+            printf("0");
+        }
+    }
 }
 
 void print_bin(uint32_t inNum, size_t inOpSize)
@@ -106,6 +114,7 @@ static const char* labelSignMagnitude =  "\nSign-Magnitude             ";
 
 void print_numerical_representation(struct NumReprs inNum, int32_t inRadix, int32_t inOpSize, enum OutputType inType)
 {
+    const int columnWidth = (inOpSize + (int)strlen("0x")) + 3;
     const uint16_t NIBBLE_SIZE = 4;
     const int16_t numNibbles = inOpSize/NIBBLE_SIZE;
     const double operandStorage = pow(2, inOpSize) - 1;
@@ -129,29 +138,16 @@ void print_numerical_representation(struct NumReprs inNum, int32_t inRadix, int3
             }
             case Octal:
             {
-                printf("%#o", abs(inNum.dec));
-                
-                int32_t num = inNum.dec;
-                int32_t numDig = 0;
-                while(num)
-                {
-                    num /= 10;
-                    numDig++;
-                }
-                printf("%*s", (inOpSize + (int)strlen("0x") - numDig + 2), "");
+                char buffer[50];
+                int sz = sprintf(buffer, "%#o", abs(inNum.dec));
+                printf("%s%*s", buffer, columnWidth - sz ,"");
                 return;
             }
             case Decimal:
             {
-                printf("%d", abs(inNum.dec));
-                int32_t num = inNum.dec;
-                int32_t numDig = 0;
-                while(num)
-                {
-                    num /= 10;
-                    numDig++;
-                }
-                printf("%*s", (inOpSize + (int)strlen("0x") - numDig + 3), "");
+                char buffer[50];
+                int sz = sprintf(buffer, "%d", abs(inNum.dec));
+                printf("%s%*s", buffer, columnWidth - sz ,"");
                 return;
             }
             case Hexadecimal:
@@ -204,6 +200,7 @@ void print_numerical_representation(struct NumReprs inNum, int32_t inRadix, int3
 
 void print_maximum_representation(int32_t inRadix, int32_t inOpSize, enum OutputType inType)
 {
+    const int columnWidth = (inOpSize + (int)strlen("0x")) + 3;
     const uint16_t NIBBLE_SIZE = 4;
     const int16_t numNibbles = inOpSize/NIBBLE_SIZE;
     const uint32_t operandStorage = (uint32_t)pow(2, inOpSize) - 1;
@@ -223,29 +220,16 @@ void print_maximum_representation(int32_t inRadix, int32_t inOpSize, enum Output
             }
             case Octal:
             {
-                printf("%#o", operandStorage);
-
-                int32_t num = operandStorage;
-                int32_t numDig = 0;
-                while(num)
-                {
-                    num /= 10;
-                    numDig++;
-                }
-                printf("%*s", (inOpSize + (int)strlen("0x") - numDig + 2), "");
+                char buffer[50];
+                int sz = sprintf(buffer, "%#o", operandStorage);
+                printf("%s%*s", buffer, columnWidth - sz ,"");
                 return;
             }
             case Decimal:
             {
-                printf("%d", operandStorage);
-                int32_t num = operandStorage;
-                int32_t numDig = 0;
-                while(num)
-                {
-                    num /= 10;
-                    numDig++;
-                }
-                printf("%*s", (inOpSize + (int)strlen("0x") - numDig + 3), "");
+                char buffer[50];
+                int sz = sprintf(buffer, "%d", operandStorage);
+                printf("%s%*s", buffer, columnWidth - sz ,"");
                 return;
             }
             case Hexadecimal:
