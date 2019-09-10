@@ -1,8 +1,5 @@
-set(SOURCE_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
+cmake_minimum_required(VERSION 3.14)
 
-# source files
-SET( SRC_FILES
-    ${SOURCE_ROOT}/main.c
-)
-
-add_executable( ecen_5813_project_1_program_1 ${SOURCE_ROOT} ${SRC_FILES} )
+add_subdirectory(program_1)
+add_subdirectory(program_2)
+add_subdirectory(program_3)
