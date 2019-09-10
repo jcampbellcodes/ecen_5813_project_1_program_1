@@ -6,4 +6,4 @@ include_directories(include)
 
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror")
 
-add_executable(ecen_5813_project_1_program_1 source/main.c include/constants.h include/custom_types.h)
+add_executable(ecen_5813_project_1_program_1 source/main.c include/constants.h include/custom_types.h include/print_helpers.h source/print_helpers.c)
