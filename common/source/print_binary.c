@@ -27,7 +27,7 @@ static const uint16_t NIBBLE_SIZE = 4;
  */
 void print_nibble(uint8_t inNum)
 {
-    const uint8_t maskedNibble = inNum & (uint8_t)0x0F;
+    const uint8_t maskedNibble = (inNum & (uint8_t)0x0F);
     for(int32_t bit = NIBBLE_SIZE - 1; bit >= 0; bit--)
     {
         if(maskedNibble & (1 << bit))
@@ -41,9 +41,6 @@ void print_nibble(uint8_t inNum)
     }
 }
 
-// refactor:
-// TODO more elegant way to groom data for the print nibble func?
-
 /**
  * @brief
  * @param inNum
@@ -56,15 +53,15 @@ void print_bin(uint32_t inNum, uint32_t inOpSize)
     union NumToBytesType
     {
         uint32_t num;
-        uint8_t bytes[4];
+        uint8_t bytes[NIBBLE_SIZE];
     } numToBytes;
-
     numToBytes.num = inNum;
 
+    // Grooming the nibbles into their own bytes
     bool lowNibble = true;
-    uint8_t nibbles[8] = {0};
+    uint8_t nibbles[NIBBLE_SIZE * 2] = {0};
     int16_t byteIter = 0;
-    for(int16_t nibbleIter = 0; nibbleIter < 8; nibbleIter++)
+    for(int16_t nibbleIter = 0; nibbleIter < NIBBLE_SIZE * 2; nibbleIter++)
     {
         if(lowNibble)
         {
@@ -78,6 +75,7 @@ void print_bin(uint32_t inNum, uint32_t inOpSize)
         lowNibble = !lowNibble;
     }
 
+    // iterate over the nibbles
     for(int32_t i = NUM_NIBBLES-1; i >= 0; i--)
     {
         print_nibble(nibbles[i]);

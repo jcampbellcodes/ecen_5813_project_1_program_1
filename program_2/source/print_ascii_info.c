@@ -50,9 +50,12 @@ const char* get_ascii_type_string(uint8_t inCode)
 
 void print_ascii_info(uint8_t inCode)
 {
-    const uint32_t COLUMN_WIDTHS[2] = {15, 25};
-    // TODO: get rid of magic number for char buffer
-    char buffer[20];
+    const uint32_t BUFFER_SIZE = 256;
+    const uint32_t LEFT_COLUMN_WIDTH = 15;
+    const uint32_t CENTER_COLUMN_WIDTH = 25;
+    const uint32_t COLUMN_WIDTHS[2] = {LEFT_COLUMN_WIDTH, CENTER_COLUMN_WIDTH};
+    char buffer[BUFFER_SIZE];
+
     uint32_t usedWidth = sprintf(buffer, "\nCode: %d", inCode);
     printf("%s%*s", buffer, COLUMN_WIDTHS[0] - usedWidth, "");
 

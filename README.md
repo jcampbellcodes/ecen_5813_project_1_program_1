@@ -15,7 +15,6 @@ make
 ```
 
 # TODO:
-- Port to Linux makefiles
 - Address all style guide issues
-- Documentation all function declarations
+- Document all function declarations
 - Address all TODO statements in code

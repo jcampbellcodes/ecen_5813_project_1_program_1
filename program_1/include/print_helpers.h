@@ -14,6 +14,8 @@
 #define PROJECT_PRINT_HELPERS_H
 
 #include <stdint.h>
+#include <stdbool.h>
+#include "custom_types.h"
 
 /**
  * @brief
