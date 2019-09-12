@@ -2,17 +2,15 @@
 // Created by Jack Campbell on 2019-09-10.
 //
 
-#include "print_helpers.h"
-#include "custom_types.h"
-
 // System includes
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
 
 // User includes
-#include "constants.h"
 #include "custom_types.h"
+#include "print_helpers.h"
+#include "print_binary.h"
 
 static const char* labelOutput =         "\nOutput:                    ";
 static const char* labelBinary =         "\nBinary (abs)               ";
@@ -22,7 +20,9 @@ static const char* labelHexadecimal =    "\nHexadecimal (abs)          ";
 static const char* labelOnesComplement = "\nSigned One's Complement    ";
 static const char* labelTwosComplement = "\nSigned Two's Complement    ";
 static const char* labelSignMagnitude =  "\nSign-Magnitude             ";
-const uint16_t NIBBLE_SIZE = 4;
+
+// taken from lecture;
+#define ABS(x) ((x)>0?(x):-(x))
 
 struct NumReprs parse_numeric(int32_t inRawNum, uint32_t inOpSize)
 {
@@ -37,62 +37,6 @@ struct NumReprs parse_numeric(int32_t inRawNum, uint32_t inOpSize)
 
     return outNum;
 };
-
-void print_nibble(uint8_t inNum)
-{
-    const uint8_t maskedNibble = inNum & (uint8_t)0x0F;
-    for(int32_t bit = NIBBLE_SIZE - 1; bit >= 0; bit--)
-    {
-        if(maskedNibble & (1 << bit))
-        {
-            printf("1");
-        }
-        else
-        {
-            printf("0");
-        }
-    }
-}
-
-// refactor:
-// more elegant way to groom data for the print nibble func?
-void print_bin(uint32_t inNum, uint32_t inOpSize)
-{
-    const uint32_t NUM_NIBBLES = inOpSize/NIBBLE_SIZE;
-
-    union NumToBytesType
-    {
-        uint32_t num;
-        uint8_t bytes[4];
-    } numToBytes;
-
-    numToBytes.num = inNum;
-
-    bool lowNibble = true;
-    uint8_t nibbles[8] = {0};
-    int16_t byteIter = 0;
-    for(int16_t nibbleIter = 0; nibbleIter < 8; nibbleIter++)
-    {
-        if(lowNibble)
-        {
-            nibbles[nibbleIter] = numToBytes.bytes[byteIter] & (uint8_t)0x0F;
-        }
-        else
-        {
-            nibbles[nibbleIter] = numToBytes.bytes[byteIter] >> 4;
-            byteIter++;
-        }
-        lowNibble = !lowNibble;
-    }
-
-    for(int32_t i = NUM_NIBBLES-1; i >= 0; i--)
-    {
-        print_nibble(nibbles[i]);
-    }
-}
-
-
-
 
 bool canBeRepresented(struct NumReprs inNum, uint32_t inOpSize, enum OutputType inType)
 {
@@ -140,7 +84,6 @@ void print_numerical_representation(struct NumReprs inNum, uint32_t inOpSize, en
     if(canBeRepresented(inNum, inOpSize, inType))
     {
         // TODO replace with a call into a function table for each number type
-
         switch(inType)
         {
             case Binary:

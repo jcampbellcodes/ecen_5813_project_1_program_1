@@ -6,11 +6,9 @@
 // break types into a helper file
 // add command line input?
 // replace bit operations with macros
-// make sure those char buffers are
+// see if the char buffers can be used only once
 
 #include "print_helpers.h"
-
-
 
 int main(int argc, const char * argv[])
 {
