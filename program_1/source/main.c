@@ -1,3 +1,15 @@
+/*
+ * @file File Name and Description
+ * @brief File
+ *
+ * @details
+ *
+ * @author Jack Campbell
+ * @tools (compiler, linker, debugger)
+ * LEVERAGED CODE
+ * LINKS
+ */
+
 // TODO:
 // refactor repeated code -- command pattern?
 // make sure that all the print representation functions make sense as one

@@ -1,6 +1,14 @@
-//
-// Created by Jack Campbell on 2019-09-11.
-//
+/*
+ * @file File Name and Description
+ * @brief File
+ *
+ * @details
+ *
+ * @author Jack Campbell
+ * @tools (compiler, linker, debugger)
+ * LEVERAGED CODE
+ * LINKS
+ */
 
 // System includes
 #include <stdio.h>
@@ -9,11 +17,12 @@
 #include "rotate_and_print.h"
 #include "print_binary.h"
 
-// from lecture
-#define bitRead(value, bit) (((value) >> (bit)) & 0x01)
-#define lastThreeBitsOn(value) (bitRead(value, 0) && bitRead(value, 1) && bitRead(value, 2))
-#define rotateRight(value, shiftAmt) (uint32_t)((value >> shiftAmt)|(value << (16 - shiftAmt)))
-
+/**
+ * @brief
+ * @param value
+ * @param rotateAmt
+ * @return
+ */
 const char* rotate_and_print(uint32_t* value, uint32_t rotateAmt)
 {
     if(!value)

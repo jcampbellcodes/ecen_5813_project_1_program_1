@@ -1,6 +1,14 @@
-//
-// Created by Jack Campbell on 2019-09-10.
-//
+/*
+ * @file File Name and Description
+ * @brief File
+ *
+ * @details
+ *
+ * @author Jack Campbell
+ * @tools (compiler, linker, debugger)
+ * LEVERAGED CODE
+ * LINKS
+ */
 
 // System includes
 #include <stdio.h>
@@ -11,7 +19,11 @@
 #include "custom_types.h"
 #include "print_helpers.h"
 #include "print_binary.h"
+#include "abs.h"
 
+/**
+ * @brief
+ */
 static const char* labelOutput =         "\nOutput:                    ";
 static const char* labelBinary =         "\nBinary (abs)               ";
 static const char* labelOctal =          "\nOctal (abs)                ";
@@ -21,9 +33,13 @@ static const char* labelOnesComplement = "\nSigned One's Complement    ";
 static const char* labelTwosComplement = "\nSigned Two's Complement    ";
 static const char* labelSignMagnitude =  "\nSign-Magnitude             ";
 
-// taken from lecture;
-#define ABS(x) ((x)>0?(x):-(x))
 
+/**
+ * @brief
+ * @param inRawNum
+ * @param inOpSize
+ * @return
+ */
 struct NumReprs parse_numeric(int32_t inRawNum, uint32_t inOpSize)
 {
     struct NumReprs outNum = {0};
@@ -38,6 +54,13 @@ struct NumReprs parse_numeric(int32_t inRawNum, uint32_t inOpSize)
     return outNum;
 };
 
+/**
+ * @brief
+ * @param inNum
+ * @param inOpSize
+ * @param inType
+ * @return
+ */
 bool canBeRepresented(struct NumReprs inNum, uint32_t inOpSize, enum OutputType inType)
 {
     const uint32_t operandStorage = (uint32_t)((1 << inOpSize) - 1);
@@ -78,6 +101,12 @@ bool canBeRepresented(struct NumReprs inNum, uint32_t inOpSize, enum OutputType 
     }
 }
 
+/**
+ * @brief
+ * @param inNum
+ * @param inOpSize
+ * @param inType
+ */
 void print_numerical_representation(struct NumReprs inNum, uint32_t inOpSize, enum OutputType inType)
 {
     const int32_t columnWidth = (inOpSize + 5); //TODO REMOVE MAGIC NUMBER
@@ -142,6 +171,11 @@ void print_numerical_representation(struct NumReprs inNum, uint32_t inOpSize, en
     }
 }
 
+/**
+ * @brief
+ * @param inOpSize
+ * @param inType
+ */
 void print_max_min_representation(uint32_t inOpSize, enum OutputType inType)
 {
     const uint32_t columnWidth = (inOpSize + 5); //TODO REMOVE MAGIC NUMBER
@@ -241,6 +275,12 @@ void print_max_min_representation(uint32_t inOpSize, enum OutputType inType)
     }
 }
 
+/**
+ * @brief
+ * @param inRawNum
+ * @param inRadix
+ * @param inOpSize
+ */
 void print_numerical_representations(int32_t inRawNum, int32_t inRadix, int32_t inOpSize)
 {
     // groom radix and inOpSize

@@ -1,10 +1,21 @@
-//
-// Created by Jack Campbell on 2019-09-10.
-//
+/*
+ * @file File Name and Description
+ * @brief File
+ *
+ * @details
+ *
+ * @author Jack Campbell
+ * @tools (compiler, linker, debugger)
+ * LEVERAGED CODE
+ * LINKS
+ */
 
 #ifndef PROJECT_CUSTOM_TYPES_H
 #define PROJECT_CUSTOM_TYPES_H
 
+/**
+ * @brief
+ */
 enum OutputType
 {
     Binary,
@@ -16,6 +27,9 @@ enum OutputType
     SignMagnitude
 };
 
+/**
+ * @brief
+ */
 struct NumReprs
 {
     int32_t dec;

@@ -14,3 +14,8 @@ make
 ./program_1/ecen_5813_project_1_program_3
 ```
 
+# TODO:
+- Port to Linux makefiles
+- Address all style guide issues
+- Documentation all function declarations
+- Address all TODO statements in code

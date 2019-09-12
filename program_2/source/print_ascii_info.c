@@ -1,7 +1,14 @@
-//
-// Created by Jack Campbell on 2019-09-11.
-//
-
+/*
+ * @file File Name and Description
+ * @brief File
+ *
+ * @details
+ *
+ * @author Jack Campbell
+ * @tools (compiler, linker, debugger)
+ * LEVERAGED CODE
+ * LINKS
+ */
 #include <ctype.h>
 #include <stdio.h>
 #include "print_ascii_info.h"
@@ -12,6 +19,11 @@ const char* const DISPLAY_DIGIT = "Digit";
 const char* const DISPLAY_WHITE_SPACE = "White Space";
 const char* const DISPLAY_SPECIAL = "Special";
 
+/**
+ * @brief
+ * @param inCode
+ * @return
+ */
 const char* get_ascii_type_string(uint8_t inCode)
 {
     if(islower(inCode))

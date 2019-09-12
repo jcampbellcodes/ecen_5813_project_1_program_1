@@ -1,6 +1,24 @@
+/*
+ * @file File Name and Description
+ * @brief File
+ *
+ * @details
+ *
+ * @author Jack Campbell
+ * @tools (compiler, linker, debugger)
+ * LEVERAGED CODE
+ * LINKS
+ */
+
 #include "print_ascii_info.h"
 #include <stdint.h>
 
+/**
+ * @brief
+ * @param argc
+ * @param argv
+ * @return
+ */
 int main(int argc, const char * argv[])
 {
     const int8_t NUM_INPUTS = 20;
