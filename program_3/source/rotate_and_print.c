@@ -19,10 +19,11 @@
 #include "print_binary.h"
 
 /**
- * @brief
- * @param value
- * @param rotateAmt
- * @return
+ * rotate_and_print
+ * @brief Given a pointer to a number, rotate that number in place by a specified amount.
+ * @param value A pointer to the value to rotate
+ * @param rotateAmt The amount to rotate the number to the right
+ * @return A string, true or false, describing whether the last three bits are on.
  */
 const char* rotate_and_print(uint32_t* value, uint32_t rotateAmt)
 {

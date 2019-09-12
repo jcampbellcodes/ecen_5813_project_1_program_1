@@ -17,7 +17,11 @@
 #define PROJECT_CONSTANTS_H
 
 /**
- * @brief
+ * ABS
+ * @details Leveraged code in this file includes the ABS macro, taken from
+ *          Slide 30 of "More C Topics" lecture from ECEN 5813
+ *          Link: https://canvas.colorado.edu/courses/53078/files/folder/Class%20FIles?preview=7085601
+ *  Takes a number and returns the absolute value of that number.
  */
 #define ABS(x) ((x)>0?(x):-(x))
 

@@ -13,13 +13,6 @@
  *         Debugger: GNU gdb 8.2.91.20190405-git
  */
 
-// TODO:
-// make sure that all the print representation functions make sense as one
-// bring out constants from magic numbers
-// add command line input?
-// replace bit operations with macros
-// see if the char buffers can be used only once
-
 #include "print_helpers.h"
 
 #define NUM_INPUTS 11

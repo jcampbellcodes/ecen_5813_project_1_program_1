@@ -12,15 +12,20 @@
 #ifndef PROJECT_PRINT_HELPERS_H
 #define PROJECT_PRINT_HELPERS_H
 
+// System includes
 #include <stdint.h>
 #include <stdbool.h>
+
+// User includes
 #include "custom_types.h"
 
 /**
- * @brief
- * @param inRawNum
- * @param inRadix
- * @param inOpSize
+ * print_numerical_representations
+ * @brief Generates and prints a table of various representations of a numeric value
+ * @param inRawNum The raw number to display numeric representations of
+ * @param inRadix The radix of inRawNum. Must be 8, 10, or 16
+ * @param inOpSize The operand size of inRawNum. Must be 4, 8, or 16
+ * @return None
  */
 void print_numerical_representations(int32_t inRawNum, int32_t inRadix, int32_t inOpSize);
 

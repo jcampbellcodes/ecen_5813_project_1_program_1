@@ -16,14 +16,16 @@
 #include <stdbool.h>
 
 /**
- * @brief
+ * Defines for nibble and byte sizes to be used when iterating over numerical values
  */
-static const uint16_t NIBBLE_SIZE = 4;
-static const uint16_t BYTE_SIZE = 8;
+#define NIBBLE_SIZE 4
+#define BYTE_SIZE 8
 
 /**
- * @brief
- * @param inNum
+ * print_nibble
+ * @brief Private function that prints the low nibble of a byte
+ * @param inNum Value whose low nibble we will print
+ * @return None
  */
 void print_nibble(uint8_t inNum)
 {
@@ -42,9 +44,11 @@ void print_nibble(uint8_t inNum)
 }
 
 /**
- * @brief
- * @param inNum
- * @param inOpSize
+ * print_bin
+ * @brief Prints a binary representation of a unsigned 32 bit integer
+ * @param inNum The value to print as binary
+ * @param inOpSize How many bits of the number to print
+ * @return None
  */
 void print_bin(uint32_t inNum, uint32_t inOpSize)
 {
@@ -59,7 +63,7 @@ void print_bin(uint32_t inNum, uint32_t inOpSize)
 
     // Grooming the nibbles into their own bytes
     bool lowNibble = true;
-    uint8_t nibbles[BYTE_SIZE];
+    uint8_t nibbles[BYTE_SIZE] = {0};
     int16_t byteIter = 0;
     for(int16_t nibbleIter = 0; nibbleIter < NIBBLE_SIZE * 2; nibbleIter++)
     {

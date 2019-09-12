@@ -14,6 +14,7 @@
 
 #include "print_ascii_info.h"
 #include <stdint.h>
+
 #define NUM_INPUTS 20
 
 int main(int argc, const char * argv[])

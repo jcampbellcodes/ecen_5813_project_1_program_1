@@ -1,0 +1,94 @@
+
+Table for: { Number: -6, Radix: 10, Operand Size: 4 }
+Output:                    Value    Maximum  Minimum
+Binary (abs)               0b0110   0b1111   0b0000
+Octal (abs)                06       017      0
+Decimal (abs)              6        15       0
+Hexadecimal (abs)          0x6      0xF      0x0
+Signed One's Complement    0b1001   0b0111   0b0111
+Signed Two's Complement    0b1010   0b1000   0b1000
+Sign-Magnitude             0b1110   0b0111   0b1111
+
+Error: Input set { Number: -6, Radix: 9, Operand Size: 4 } is invalid -- aborting table generation.
+
+Error: Input set { Number: -6, Radix: 10, Operand Size: 5 } is invalid -- aborting table generation.
+
+Table for: { Number: -9, Radix: 10, Operand Size: 4 }
+Output:                    Value    Maximum  Minimum
+Binary (abs)               0b1001   0b1111   0b0000
+Octal (abs)                011      017      0
+Decimal (abs)              9        15       0
+Hexadecimal (abs)          0x9      0xF      0x0
+Signed One's Complement    0b0110   0b0111   0b0111
+Signed Two's Complement    0b0111   0b1000   0b1000
+Sign-Magnitude             Error    0b0111   0b1111
+
+Table for: { Number: 237, Radix: 10, Operand Size: 8 }
+Output:                    Value        Maximum      Minimum
+Binary (abs)               0b11101101   0b11111111   0b00000000
+Octal (abs)                0355         0377         0
+Decimal (abs)              237          255          0
+Hexadecimal (abs)          0xED         0xFF         0x00
+Signed One's Complement    0b00010010   0b01111111   0b01111111
+Signed Two's Complement    0b00010011   0b10000000   0b10000000
+Sign-Magnitude             Error        0b01111111   0b11111111
+
+Table for: { Number: 236, Radix: 8, Operand Size: 8 }
+Output:                    Value        Maximum      Minimum
+Binary (abs)               0b11101100   0b11111111   0b00000000
+Octal (abs)                0354         0377         0
+Decimal (abs)              236          255          0
+Hexadecimal (abs)          0xEC         0xFF         0x00
+Signed One's Complement    0b00010011   0b01111111   0b01111111
+Signed Two's Complement    0b00010100   0b10000000   0b10000000
+Sign-Magnitude             Error        0b01111111   0b11111111
+
+Table for: { Number: 235, Radix: 16, Operand Size: 8 }
+Output:                    Value        Maximum      Minimum
+Binary (abs)               0b11101011   0b11111111   0b00000000
+Octal (abs)                0353         0377         0
+Decimal (abs)              235          255          0
+Hexadecimal (abs)          0xEB         0xFF         0x00
+Signed One's Complement    0b00010100   0b01111111   0b01111111
+Signed Two's Complement    0b00010101   0b10000000   0b10000000
+Sign-Magnitude             Error        0b01111111   0b11111111
+
+Table for: { Number: -125, Radix: 10, Operand Size: 8 }
+Output:                    Value        Maximum      Minimum
+Binary (abs)               0b01111101   0b11111111   0b00000000
+Octal (abs)                0175         0377         0
+Decimal (abs)              125          255          0
+Hexadecimal (abs)          0x7D         0xFF         0x00
+Signed One's Complement    0b10000010   0b01111111   0b01111111
+Signed Two's Complement    0b10000011   0b10000000   0b10000000
+Sign-Magnitude             0b11111101   0b01111111   0b11111111
+
+Table for: { Number: 65400, Radix: 10, Operand Size: 8 }
+Output:                    Value        Maximum      Minimum
+Binary (abs)               Error        0b11111111   0b00000000
+Octal (abs)                0177570      0377         0
+Decimal (abs)              65400        255          0
+Hexadecimal (abs)          Error        0xFF         0x00
+Signed One's Complement    Error        0b01111111   0b01111111
+Signed Two's Complement    Error        0b10000000   0b10000000
+Sign-Magnitude             Error        0b01111111   0b11111111
+
+Table for: { Number: 65400, Radix: 10, Operand Size: 16 }
+Output:                    Value                Maximum              Minimum
+Binary (abs)               0b1111111101111000   0b1111111111111111   0b0000000000000000
+Octal (abs)                0177570              0177777              0
+Decimal (abs)              65400                65535                0
+Hexadecimal (abs)          0xFF78               0xFFFF               0x0000
+Signed One's Complement    0b0000000010000111   0b0111111111111111   0b0111111111111111
+Signed Two's Complement    0b0000000010001000   0b1000000000000000   0b1000000000000000
+Sign-Magnitude             Error                0b0111111111111111   0b1111111111111111
+
+Table for: { Number: -32701, Radix: 10, Operand Size: 16 }
+Output:                    Value                Maximum              Minimum
+Binary (abs)               0b0111111110111101   0b1111111111111111   0b0000000000000000
+Octal (abs)                077675               0177777              0
+Decimal (abs)              32701                65535                0
+Hexadecimal (abs)          0x7FBD               0xFFFF               0x0000
+Signed One's Complement    0b1000000001000010   0b0111111111111111   0b0111111111111111
+Signed Two's Complement    0b1000000001000011   0b1000000000000000   0b1000000000000000
+Sign-Magnitude             0b1111111110111101   0b0111111111111111   0b1111111111111111

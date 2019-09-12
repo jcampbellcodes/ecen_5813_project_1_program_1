@@ -22,7 +22,7 @@
 #include "abs.h"
 
 /**
- * @brief
+ * These strings are used as constant labels for each valid table.
  */
 static const char* labelOutput =         "\nOutput:                    ";
 static const char* labelBinary =         "\nBinary (abs)               ";
@@ -33,12 +33,23 @@ static const char* labelOnesComplement = "\nSigned One's Complement    ";
 static const char* labelTwosComplement = "\nSigned Two's Complement    ";
 static const char* labelSignMagnitude =  "\nSign-Magnitude             ";
 
+/**
+ * This define is used by functions that want to write to a static scratch buffer
+ */
+#define SCRATCH_BUFFER_SIZE 256
 
 /**
- * @brief
- * @param inRawNum
- * @param inOpSize
- * @return
+ * This constant is used to add padding to dynamic column sizes
+ */
+const uint32_t COLUMN_PADDING = 5;
+
+/**
+ * parse_numeric
+ * @brief Private function that takes a raw number and operand
+ *        size and stores various values into the NumReprs struct
+ * @param inRawNum The raw number to parse
+ * @param inOpSize The operand size of inRawNum
+ * @return A struct containing the various value representations of inRawNum
  */
 struct NumReprs parse_numeric(int32_t inRawNum, uint32_t inOpSize)
 {
@@ -55,16 +66,17 @@ struct NumReprs parse_numeric(int32_t inRawNum, uint32_t inOpSize)
 };
 
 /**
- * @brief
- * @param inNum
- * @param inOpSize
- * @param inType
- * @return
+ * canBeRepresented
+ * @brief Determines whether a particular representation of a raw number can be calculated with the given operand size
+ * @param inNum The raw number to check
+ * @param inOpSize The operand size we wish to represent the value with
+ * @param inType The type of representation we would wish to display the number in
+ * @return Whether inNum can be represented as the inType with the constraint of inOpSize
  */
 bool canBeRepresented(struct NumReprs inNum, uint32_t inOpSize, enum OutputType inType)
 {
-    const uint32_t operandStorage = (uint32_t)((1 << inOpSize) - 1);
-    const uint32_t operandStorageSignedMag = (uint32_t)((1 << (inOpSize-1)) - 1);
+    const uint32_t operandStorage = (uint32_t)((1UL << inOpSize) - 1);
+    const uint32_t operandStorageSignedMag = (uint32_t)((1UL << (inOpSize-1)) - 1);
 
     switch(inType)
     {
@@ -90,17 +102,19 @@ bool canBeRepresented(struct NumReprs inNum, uint32_t inOpSize, enum OutputType 
 }
 
 /**
- * @brief
- * @param inNum
- * @param inOpSize
- * @param inType
+ * print_numerical_representation
+ * @brief Prints a single entry in the table of numerical representations
+ * @param inNum The NumReprs struct containing the value to print
+ * @param inOpSize The operand size to display the requested output type
+ * @param inType The type of output we would like to print in the graph
+ * @return None
  */
 void print_numerical_representation(struct NumReprs inNum, uint32_t inOpSize, enum OutputType inType)
 {
-    const int32_t columnWidth = (inOpSize + 5); //TODO REMOVE MAGIC NUMBER
+    static char SCRATCH_BUFFER[SCRATCH_BUFFER_SIZE] = {0};
+    const int32_t columnWidth = (inOpSize + COLUMN_PADDING);
     if(canBeRepresented(inNum, inOpSize, inType))
     {
-        // TODO replace with a call into a function table for each number type
         switch(inType)
         {
             case Binary:
@@ -112,23 +126,20 @@ void print_numerical_representation(struct NumReprs inNum, uint32_t inOpSize, en
             }
             case Octal:
             {
-                char buffer[50];
-                uint32_t  sz = sprintf(buffer, "%#o", ABS(inNum.dec));
-                printf("%s%*s", buffer, columnWidth - sz ,"");
+                uint32_t  sz = sprintf(SCRATCH_BUFFER, "%#o", ABS(inNum.dec));
+                printf("%s%*s", SCRATCH_BUFFER, columnWidth - sz ,"");
                 return;
             }
             case Decimal:
             {
-                char buffer[50];
-                uint32_t  sz = sprintf(buffer, "%d", ABS(inNum.dec));
-                printf("%s%*s", buffer, columnWidth - sz ,"");
+                uint32_t  sz = sprintf(SCRATCH_BUFFER, "%d", ABS(inNum.dec));
+                printf("%s%*s", SCRATCH_BUFFER, columnWidth - sz ,"");
                 return;
             }
             case Hexadecimal:
             {
-                char buffer[50];
-                uint32_t  sz = sprintf(buffer, "0x%X", ABS(inNum.dec));
-                printf("%s%*s", buffer, columnWidth - sz ,"");
+                uint32_t  sz = sprintf(SCRATCH_BUFFER, "0x%X", ABS(inNum.dec));
+                printf("%s%*s", SCRATCH_BUFFER, columnWidth - sz ,"");
                 return;
             }
             case SignedOnesComplement:
@@ -160,15 +171,18 @@ void print_numerical_representation(struct NumReprs inNum, uint32_t inOpSize, en
 }
 
 /**
- * @brief
- * @param inOpSize
- * @param inType
+ * print_max_min_representation
+ * @brief Print an entry in the table for the maximum and minimum representation for a numerical range
+ * @param inOpSize The operand size whose max and min we would like to fit in to
+ * @param inType The type of representaion we would like to print the max and min of
+ * @return None
  */
 void print_max_min_representation(uint32_t inOpSize, enum OutputType inType)
 {
-    const uint32_t columnWidth = (inOpSize + 5); //TODO REMOVE MAGIC NUMBER
-    const uint32_t operandStorage = (uint32_t)((1 << inOpSize) - 1);
-    const uint32_t operandStorageSignedMag = (uint32_t)((1 << (inOpSize-1)) - 1);
+    static char SCRATCH_BUFFER[SCRATCH_BUFFER_SIZE] = {0};
+    const uint32_t columnWidth = (inOpSize + COLUMN_PADDING);
+    const uint32_t operandStorage = (uint32_t)((1UL << inOpSize) - 1);
+    const uint32_t operandStorageSignedMag = (uint32_t)((1UL << (inOpSize-1)) - 1);
 
     switch(inType)
     {
@@ -187,9 +201,8 @@ void print_max_min_representation(uint32_t inOpSize, enum OutputType inType)
         case Octal:
         {
             // max
-            char buffer[50];
-            int sz = sprintf(buffer, "%#o", operandStorage);
-            printf("%s%*s", buffer, columnWidth - sz ,"");
+            int sz = sprintf(SCRATCH_BUFFER, "%#o", operandStorage);
+            printf("%s%*s", SCRATCH_BUFFER, columnWidth - sz ,"");
 
             //min
             printf("0");
@@ -198,9 +211,8 @@ void print_max_min_representation(uint32_t inOpSize, enum OutputType inType)
         case Decimal:
         {
             // max
-            char buffer[50];
-            int sz = sprintf(buffer, "%d", operandStorage);
-            printf("%s%*s", buffer, columnWidth - sz ,"");
+            int sz = sprintf(SCRATCH_BUFFER, "%d", operandStorage);
+            printf("%s%*s", SCRATCH_BUFFER, columnWidth - sz ,"");
 
             // min
             printf("0");
@@ -209,9 +221,8 @@ void print_max_min_representation(uint32_t inOpSize, enum OutputType inType)
         case Hexadecimal:
         {
             //max
-            char buffer[50];
-            uint32_t  sz = sprintf(buffer, "0x%X", operandStorage);
-            printf("%s%*s", buffer, columnWidth - sz ,"");
+            uint32_t  sz = sprintf(SCRATCH_BUFFER, "0x%X", operandStorage);
+            printf("%s%*s", SCRATCH_BUFFER, columnWidth - sz ,"");
 
             //min
             const uint16_t NIBBLE_SIZE = 4;
@@ -264,10 +275,12 @@ void print_max_min_representation(uint32_t inOpSize, enum OutputType inType)
 }
 
 /**
- * @brief
- * @param inRawNum
- * @param inRadix
- * @param inOpSize
+ * print_numerical_representations
+ * @brief Generates and prints a table of various representations of a numeric value
+ * @param inRawNum The raw number to display numeric representations of
+ * @param inRadix The radix of inRawNum. Must be 8, 10, or 16
+ * @param inOpSize The operand size of inRawNum. Must be 4, 8, or 16
+ * @return None
  */
 void print_numerical_representations(int32_t inRawNum, int32_t inRadix, int32_t inOpSize)
 {

@@ -15,9 +15,11 @@
 #include <stdint.h>
 
 /**
- * @brief
- * @param inNum
- * @param inOpSize
+ * print_bin
+ * @brief Prints a binary representation of a unsigned 32 bit integer
+ * @param inNum The value to print as binary
+ * @param inOpSize How many bits of the number to print
+ * @return None
  */
 void print_bin(uint32_t inNum, uint32_t inOpSize);
 

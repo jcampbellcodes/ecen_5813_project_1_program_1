@@ -12,7 +12,8 @@
 #define PROJECT_CUSTOM_TYPES_H
 
 /**
- * @brief
+ * OutputType
+ * An enumeration of the possible numeric representations of an integer value
  */
 enum OutputType
 {
@@ -26,7 +27,9 @@ enum OutputType
 };
 
 /**
- * @brief
+ * NumReprs
+ * A struct used to contain all the various value representations of a number.
+ * This struct allows us to contain all conversion code in a single function.
  */
 struct NumReprs
 {
