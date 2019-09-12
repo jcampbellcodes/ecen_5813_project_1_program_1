@@ -1,32 +1,33 @@
 /*
- * @file File Name and Description
- * @brief File
+ * @file main.c
+ * @brief Project 1 Program 1
  *
- * @details
+ * @details Program 1 takes a series of inputs that contain a raw number, a radix, and an
+ *          operand size and output a table containing various representations of that number
+ *          as well as the minimum and maximum allowed values for each representation.
  *
  * @author Jack Campbell
- * @tools (compiler, linker, debugger)
- * LEVERAGED CODE
- * LINKS
+ * @tools Tools used to generate output files:
+ *         Compiler: GCC 8.3.0
+ *         Linker: GNU ld 2.32
+ *         Debugger: GNU gdb 8.2.91.20190405-git
  */
 
 // TODO:
-// refactor repeated code -- command pattern?
 // make sure that all the print representation functions make sense as one
 // bring out constants from magic numbers
-// break functions into their own files
-// break types into a helper file
 // add command line input?
 // replace bit operations with macros
 // see if the char buffers can be used only once
 
 #include "print_helpers.h"
 
+#define NUM_INPUTS 11
+#define NUM_ARGS_PER_INPUT 3
+
 int main(int argc, const char * argv[])
 {
-    const int8_t NUM_INPUTS = 11;
-    const int8_t NUM_ARGS_PER_INPUT = 3;
-    int32_t inputs[NUM_INPUTS][NUM_ARGS_PER_INPUT] =
+    static const int32_t inputs[NUM_INPUTS][NUM_ARGS_PER_INPUT] =
     {
         {-6, 10, 4},
         {-6, 9, 4},

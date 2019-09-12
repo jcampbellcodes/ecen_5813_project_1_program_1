@@ -1,18 +1,20 @@
 /*
- * @file File Name and Description
- * @brief File
+ * @file main.c
+ * @brief Project 1 Program 3
  *
- * @details
+ * @details This program follows the series of steps outlined in the assignment, which boils down to
+ *          performing in-place rotate operations on a number and printing out the number in binary, as well as
+ *          determining whether the last three bits are on or off
  *
  * @author Jack Campbell
- * @tools (compiler, linker, debugger)
- * LEVERAGED CODE
- * LINKS
+ * @tools Tools used to generate output files:
+ *         Compiler: GCC 8.3.0
+ *         Linker: GNU ld 2.32
+ *         Debugger: GNU gdb 8.2.91.20190405-git
  */
 #include <stdio.h>
 #include <stdint.h>
 #include "rotate_and_print.h"
-
 
 int main(int argc, const char * argv[])
 {

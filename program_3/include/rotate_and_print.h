@@ -1,36 +1,46 @@
 /*
- * @file File Name and Description
- * @brief File
+ * @file rotate_and_print.h
+ * @brief Helper macros and public interface for rotating and printing a number
  *
- * @details
+ * @details Made to follow along with the steps for program 3 of project 1
  *
  * @author Jack Campbell
- * @tools (compiler, linker, debugger)
- * LEVERAGED CODE
- * LINKS
+ * @tools Tools used to generate output files:
+ *         Compiler: GCC 8.3.0
+ *         Linker: GNU ld 2.32
+ *         Debugger: GNU gdb 8.2.91.20190405-git
+ *
+ *  Leveraged code:
+ *  - bitRead macro is from Slide 31 of "More C Topics" lecture from ECEN 5813
+ *  Link: https://canvas.colorado.edu/courses/53078/files/folder/Class%20FIles?preview=7085601
+ *
+ *  - rotateRight macro is adapted from a GeeksForGeeks article:
+ *  Link: https://www.geeksforgeeks.org/rotate-bits-of-an-integer/
  */
 #ifndef PROJECT_ROTATE_AND_PRINT_H
 #define PROJECT_ROTATE_AND_PRINT_H
 
 #include <stdint.h>
 
-// From Slide 31 of "More C Topics" lecture from ECEN 5813
-// https://canvas.colorado.edu/courses/53078/files/folder/Class%20FIles?preview=7085601
+/**
+ * @brief
+ */
+#define NUM_SHORT_BYTES 16
 
 /**
  * @brief
  */
-#define bitRead(value, bit) (((value) >> (bit)) & 0x01)
+#define bitRead(value, bit) (((value) >> (bit)) & 0x01UL)
 
 /**
  * @brief
  */
-#define lastThreeBitsOn(value) (bitRead(value, 0) && bitRead(value, 1) && bitRead(value, 2))
+#define lastThreeBitsOn(value) (bitRead(value, 0UL) && bitRead(value, 1UL) && bitRead(value, 2UL))
 
 /**
  * @brief
  */
-#define rotateRight(value, shiftAmt) (uint32_t)((value >> shiftAmt)|(value << (16 - shiftAmt)))
+#define rotateRight(value, shiftAmt) (uint32_t)((value >> shiftAmt)|(value << (NUM_SHORT_BYTES - shiftAmt)))
 
 /**
  * @brief

@@ -1,13 +1,14 @@
 /*
- * @file File Name and Description
- * @brief File
+ * @file rotate_and_print.c
+ * @brief Helper macros and public interface for rotating and printing a number
  *
- * @details
+ * @details Made to follow along with the steps for program 3 of project 1
  *
  * @author Jack Campbell
- * @tools (compiler, linker, debugger)
- * LEVERAGED CODE
- * LINKS
+ * @tools Tools used to generate output files:
+ *         Compiler: GCC 8.3.0
+ *         Linker: GNU ld 2.32
+ *         Debugger: GNU gdb 8.2.91.20190405-git
  */
 
 // System includes

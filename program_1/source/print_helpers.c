@@ -1,13 +1,13 @@
 /*
- * @file File Name and Description
- * @brief File
- *
- * @details
+ * @file print_helpers.c
+ * @brief Contains private functions to support the print_numerical_representations interface
+ *        which works together to generate the number representation table for program 1
  *
  * @author Jack Campbell
- * @tools (compiler, linker, debugger)
- * LEVERAGED CODE
- * LINKS
+ * @tools Tools used to generate output files:
+ *         Compiler: GCC 8.3.0
+ *         Linker: GNU ld 2.32
+ *         Debugger: GNU gdb 8.2.91.20190405-git
  */
 
 // System includes
@@ -68,26 +68,14 @@ bool canBeRepresented(struct NumReprs inNum, uint32_t inOpSize, enum OutputType 
 
     switch(inType)
     {
-        case Binary:
-        {
-            return inNum.dec_abs <= operandStorage;
-        }
         case Octal:
-        {
-            return true;
-        }
         case Decimal:
         {
             return true;
         }
+        case Binary:
         case Hexadecimal:
-        {
-            return inNum.dec_abs <= operandStorage;
-        }
         case SignedOnesComplement:
-        {
-            return inNum.dec_abs  <= operandStorage;
-        }
         case SignedTwosComplement:
         {
             return inNum.dec_abs <= operandStorage;

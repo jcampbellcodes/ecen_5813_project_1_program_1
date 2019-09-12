@@ -1,13 +1,12 @@
 /*
- * @file File Name and Description
- * @brief File
- *
- * @details
- *
+ * @file print_binary.c
+ * @brief Utilities for printing binary representations of unsigned 32 bit integers.
+
  * @author Jack Campbell
- * @tools (compiler, linker, debugger)
- * LEVERAGED CODE
- * LINKS
+ * @tools Tools used to generate output files:
+ *         Compiler: GCC 8.3.0
+ *         Linker: GNU ld 2.32
+ *         Debugger: GNU gdb 8.2.91.20190405-git
  */
 
 #include "print_binary.h"
@@ -20,6 +19,7 @@
  * @brief
  */
 static const uint16_t NIBBLE_SIZE = 4;
+static const uint16_t BYTE_SIZE = 8;
 
 /**
  * @brief
@@ -59,7 +59,7 @@ void print_bin(uint32_t inNum, uint32_t inOpSize)
 
     // Grooming the nibbles into their own bytes
     bool lowNibble = true;
-    uint8_t nibbles[NIBBLE_SIZE * 2] = {0};
+    uint8_t nibbles[BYTE_SIZE];
     int16_t byteIter = 0;
     for(int16_t nibbleIter = 0; nibbleIter < NIBBLE_SIZE * 2; nibbleIter++)
     {

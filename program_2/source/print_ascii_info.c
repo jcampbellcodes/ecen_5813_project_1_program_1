@@ -1,13 +1,14 @@
 /*
- * @file File Name and Description
- * @brief File
+ * @file print_ascii_info.c
+ * @brief Contains a function that can output information about an ASCII code.
  *
- * @details
+ * @details Contains defines and utilities for printing out ASCII types.
  *
  * @author Jack Campbell
- * @tools (compiler, linker, debugger)
- * LEVERAGED CODE
- * LINKS
+ * @tools Tools used to generate output files:
+ *         Compiler: GCC 8.3.0
+ *         Linker: GNU ld 2.32
+ *         Debugger: GNU gdb 8.2.91.20190405-git
  */
 #include <ctype.h>
 #include <stdio.h>

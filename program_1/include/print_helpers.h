@@ -1,13 +1,12 @@
 /*
- * @file File Name and Description
- * @brief File
- *
- * @details
+ * @file print_helpers.h
+ * @brief Exposes a function that can be used to generate the numerical representation table
  *
  * @author Jack Campbell
- * @tools (compiler, linker, debugger)
- * LEVERAGED CODE
- * LINKS
+ * @tools Tools used to generate output files:
+ *         Compiler: GCC 8.3.0
+ *         Linker: GNU ld 2.32
+ *         Debugger: GNU gdb 8.2.91.20190405-git
  */
 
 #ifndef PROJECT_PRINT_HELPERS_H
@@ -24,37 +23,5 @@
  * @param inOpSize
  */
 void print_numerical_representations(int32_t inRawNum, int32_t inRadix, int32_t inOpSize);
-
-/**
- * @brief
- * @param inRawNum
- * @param inOpSize
- * @return
- */
-struct NumReprs parse_numeric(int32_t inRawNum, uint32_t inOpSize);
-
-/**
- * @brief
- * @param inNum
- * @param inOpSize
- * @param inType
- * @return
- */
-bool canBeRepresented(struct NumReprs inNum, uint32_t inOpSize, enum OutputType inType);
-
-/**
- * @brief
- * @param inNum
- * @param inOpSize
- * @param inType
- */
-void print_numerical_representation(struct NumReprs inNum, uint32_t inOpSize, enum OutputType inType);
-
-/**
- * @brief
- * @param inOpSize
- * @param inType
- */
-void print_max_min_representation(uint32_t inOpSize, enum OutputType inType);
 
 #endif //PROJECT_PRINT_HELPERS_H

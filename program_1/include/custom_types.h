@@ -1,15 +1,13 @@
 /*
- * @file File Name and Description
- * @brief File
- *
- * @details
+ * @file custom_types.h
+ * @brief Contains types used by Program One to organize various representations of integral types.
  *
  * @author Jack Campbell
- * @tools (compiler, linker, debugger)
- * LEVERAGED CODE
- * LINKS
+ * @tools Tools used to generate output files:
+ *         Compiler: GCC 8.3.0
+ *         Linker: GNU ld 2.32
+ *         Debugger: GNU gdb 8.2.91.20190405-git
  */
-
 #ifndef PROJECT_CUSTOM_TYPES_H
 #define PROJECT_CUSTOM_TYPES_H
 
