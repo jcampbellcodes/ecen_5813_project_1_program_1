@@ -1,5 +1,5 @@
 0xCAFE
-1100101011111110 -> 3 of last 4 bits are on? false
+1100101011111110 -> 3 of last 4 bits are on? true
 0xFECA
 1111111011001010 -> 3 of last 4 bits are on? false
 0xECAF
