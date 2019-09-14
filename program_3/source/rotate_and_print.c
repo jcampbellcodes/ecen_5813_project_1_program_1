@@ -19,6 +19,10 @@
 #include "print_binary.h"
 
 // Globals
+/**
+ * A collection of booleans corresponding to all possible values for a nibble.
+ * 1 if three of the last four bits of the byte are on, 0 otherwise
+ */
 const uint8_t LOOKUP_TABLE[16] = {0,0,0,0,0,0,0,1,0,0,0,1,0,1,1,1};
 
 /**
