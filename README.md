@@ -2,9 +2,12 @@
 
 ## Contributors: Troy Davis, Jack Campbell
 
-## Organization:
+## Project Organization:
 Each program is organized by a subdirectory containing a CMake config and include/source dirs.
 To build and run the programs using Makefiles, navigate to the root directory and run these commands.
+
+Functions called from `main()` are declared in header files, while private functions used internally
+by public functions are only declared and defined in the implementation files. 
 
 This requires CMake 3.14 installed.
 To get this version on Ubuntu, call:
