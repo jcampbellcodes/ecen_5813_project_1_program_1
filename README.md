@@ -10,7 +10,7 @@ This requires CMake 3.14 installed.
 To get this version on Ubuntu, call:
 ```sudo apt-get install cmake```
 
-Compilation instructions:
+Compilation instructions. Navigate to the root directory of the repo and run these:
 ```
 mkdir build && cd build
 cmake ..
@@ -25,12 +25,6 @@ Execution instructions:
 ```
 
 Inputs are compiled into the executables rather than read from the command line.
-
-Improvements could be made:
-- Refactoring print_numerical_representations in program 1 to be less verbose. Maybe replace switch statements
-  with jump tables?
-- Replace raw bit manipulations with macros
-- Accept command line input
 
 ## ASCII type criteria for Program 2:
 As requested in the project, the criteria we use for what constitutes an uppercase, lowercase,
